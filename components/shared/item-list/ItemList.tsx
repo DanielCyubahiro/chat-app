@@ -1,5 +1,9 @@
+'use client'
+
 import {Card} from '@/components/ui/card';
 import {PropsWithChildren, ReactNode} from 'react';
+import {cn} from '@/lib/utils';
+import {useConversation} from '@/hooks/useConversation';
 
 type Props = PropsWithChildren<{
   title: string;
@@ -7,16 +11,19 @@ type Props = PropsWithChildren<{
 }>
 
 const ItemList = ({children, title, action: Action}: Props) => {
+  const {isActive} = useConversation();
   return (
-      <Card className={'h-full w-full lg:flex-none lg:w-80 p-2'}>
+      <Card className={cn('hidden h-full w-full lg:flex-none lg:w-80 p-2', {
+        'block': !isActive,
+        'lg:block': isActive,
+      })}>
         <div className={'mb-4 flex items-center justify-between'}>
           <h1 className={'text-2xl font-semibold tracking-tight'}>
             {title}
           </h1>
           {Action ?? null}
         </div>
-        <div
-            className={'w-full h-full flex flex-col items-center justify-start gap-2'}>
+        <div className={'w-full h-full flex flex-col items-center justify-start gap-2'}>
           {children}
         </div>
       </Card>
