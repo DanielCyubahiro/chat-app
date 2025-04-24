@@ -1,6 +1,8 @@
+import ItemList from '@/components/shared/item-list/ItemList';
+
 type Props = object
 const FriendsPage = ({}: Props) => {
-  return <h1>FriendsPage</h1>;
+  return <ItemList title={'Friends'}>FriendsPage</ItemList>;
 };
 
 export default FriendsPage;
