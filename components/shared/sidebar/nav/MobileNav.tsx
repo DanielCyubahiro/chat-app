@@ -7,6 +7,7 @@ import Link from 'next/link';
 import {Tooltip, TooltipContent, TooltipTrigger} from '@/components/ui/tooltip';
 import {Button} from '@/components/ui/button';
 import {useConversation} from '@/hooks/useConversation';
+import {Badge} from '@/components/ui/badge';
 
 const MobileNav = () => {
   const paths = useNavigation();
@@ -23,10 +24,18 @@ const MobileNav = () => {
                   <Link href={path.href}>
                     <Tooltip>
                       <TooltipTrigger asChild>
-                        <Button size={'icon'}
-                                variant={path.active ? 'default' : 'outline'}>
-                          {path.icon}
-                        </Button>
+                        <div>
+                          <Button size={'icon'}
+                                  variant={path.active ? 'default' : 'outline'}>
+                            {path.icon}
+                          </Button>
+                          {path.count
+                              ? <Badge
+                                  className={'absolute left-7 bottom-6 px-2'}>
+                                {path.count}
+                              </Badge>
+                              : null}
+                        </div>
                       </TooltipTrigger>
                       <TooltipContent>
                         <p>{path.name}</p>
