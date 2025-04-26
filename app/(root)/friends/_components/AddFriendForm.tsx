@@ -29,7 +29,7 @@ import {api} from '@/convex/_generated/api';
 import {toast} from 'sonner';
 import {ConvexError} from 'convex/values';
 
-const addFriendFormSchema = z.object({
+const addFriendFormValidation = z.object({
   email: z.
       string().
       email('Please enter a valid email address'),
@@ -38,13 +38,13 @@ const addFriendFormSchema = z.object({
 const AddFriendForm = () => {
   const {mutate: createRequest, pending} = useMutationState(api.request.create);
 
-  const form = useForm<z.infer<typeof addFriendFormSchema>>({
-    resolver: zodResolver(addFriendFormSchema),
+  const form = useForm<z.infer<typeof addFriendFormValidation>>({
+    resolver: zodResolver(addFriendFormValidation),
     defaultValues: {
       email: '',
     },
   });
-  const handleSubmit = async (values: z.infer<typeof addFriendFormSchema>) => {
+  const handleSubmit = async (values: z.infer<typeof addFriendFormValidation>) => {
     await createRequest({email: values.email}).then(() => {
       form.reset();
       toast.success('Friend request sent!');
