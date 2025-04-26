@@ -7,6 +7,7 @@ import {useMutationState} from '@/hooks/useMutationState';
 import {api} from '@/convex/_generated/api';
 import {toast} from 'sonner';
 import {ConvexError} from 'convex/values';
+import {accept} from '@/convex/request';
 
 type Props = {
   id: Id<requests>
@@ -18,6 +19,8 @@ type Props = {
 const Request = ({id, imageUrl, username, email}: Props) => {
   const {mutate: denyRequest, pending: denyPending} = useMutationState(
       api.request.deny);
+  const {mutate: acceptRequest, pending: acceptPending} = useMutationState(
+      api.request.accept);
   return (
       <Card
           className={'w-full p-2 flex flex-row items-center justify-between gap-2'}>
@@ -36,14 +39,20 @@ const Request = ({id, imageUrl, username, email}: Props) => {
         <div className="flex items-center gap-2">
           <Button
               size={'icon'}
-              disabled={denyPending}
-              onClick={() => {}}>
+              disabled={denyPending || acceptPending}
+              onClick={() => {
+                acceptRequest({id}).
+                    then(() => toast.success('Friend request accepted!')).
+                    catch(error => toast.error(error instanceof ConvexError
+                        ? error.data
+                        : 'Unexpected error'));
+              }}>
             <Check/>
           </Button>
           <Button
               size={'icon'}
               variant={'destructive'}
-              disabled={denyPending}
+              disabled={denyPending || acceptPending}
               onClick={() => {
                 denyRequest({id}).
                     then(() => toast.success('Friend request denied')).
