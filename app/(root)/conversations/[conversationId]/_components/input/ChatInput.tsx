@@ -7,20 +7,17 @@ import {useForm} from 'react-hook-form';
 import {zodResolver} from '@hookform/resolvers/zod';
 import {toast} from 'sonner';
 import {ConvexError} from 'convex/values';
-import React, {useRef} from 'react';
+import React from 'react';
 import {Form, FormControl, FormField, FormItem} from '@/components/ui/form';
 import TextareaAutosize from 'react-textarea-autosize';
 import {Button} from '@/components/ui/button';
 import {SendHorizonal} from 'lucide-react';
 
-type Props = {}
-
 const chatMessageValidation = z.object({
   content: z.string().min(1),
 });
 
-const ChatInput = ({}: Props) => {
-  const textareaRef = useRef<HTMLTextAreaElement | null>(null);
+const ChatInput = () => {
   const {conversationId} = useConversation();
   const {mutate: createMessage, pending} = useMutationState(api.message.create);
   const form = useForm<z.infer<typeof chatMessageValidation>>({

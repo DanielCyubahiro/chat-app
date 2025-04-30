@@ -35,6 +35,7 @@ const ConversationsLayout = ({children}: Props) => {
                                       ''}
                                   lastMessageSender={conversation?.lastMessage?.sender}
                                   lastMessageContent={conversation?.lastMessage?.content}
+                                  unseenCount={conversation.unseenCount}
                               />
                               : <DMConversationItem
                                   key={conversation.conversation._id}
@@ -45,6 +46,7 @@ const ConversationsLayout = ({children}: Props) => {
                                       ''}
                                   lastMessageSender={conversation?.lastMessage?.sender}
                                   lastMessageContent={conversation?.lastMessage?.content}
+                                  unseenCount={conversation.unseenCount}
                               />,
                       )
               )

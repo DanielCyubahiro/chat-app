@@ -25,7 +25,6 @@ const ConversationPage = () => {
   const [removeFriendDialogOpen, setRemoveFriendDialogOpen] = useState(false);
   const [deleteGroupDialogOpen, setDeleteGroupDialogOpen] = useState(false);
   const [leaveGroupDialogOpen, setLeaveGroupDialogOpen] = useState(false);
-  const [callType, setCallType] = useState<'audio' | 'video' | null>(null);
   const {conversationId} = useParams<{ conversationId: string }>();
   const convexConversationId = conversationId as Id<'conversations'>;
   const conversation = useQuery(
@@ -90,7 +89,13 @@ const ConversationPage = () => {
                               }]
                         }
                     />
-                    <Body/>
+                    <Body members={
+                      conversation.isGroup
+                          ? conversation.otherMembers || []
+                          : conversation.otherMember
+                              ? [conversation.otherMember]
+                              : []
+                    }/>
                     <ChatInput/>
                   </ConversationContainer>
               )

@@ -167,7 +167,7 @@ const CreateGroupDialog = () => {
               {members && members.length
                   ? (
                       <Card
-                          className={'w-full flex items-center gap-3 overflow-x-auto h-24 p-2 no-scrollbar'}>
+                          className={'w-full flex flex-row items-center gap-3 overflow-x-auto h-24 p-2 no-scrollbar'}>
                         {friends?.filter(
                             friend => members.includes(friend._id)).
                             map(friend => (

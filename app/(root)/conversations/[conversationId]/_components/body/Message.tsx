@@ -1,6 +1,7 @@
 import {format} from 'date-fns';
 import {cn} from '@/lib/utils';
 import {Avatar, AvatarFallback, AvatarImage} from '@/components/ui/avatar';
+import {ReactNode} from 'react';
 
 type Props = {
   fromCurrentUser: boolean;
@@ -9,6 +10,7 @@ type Props = {
   lastByUser: boolean;
   content: string[];
   type: string;
+  seen?: ReactNode;
   createdAt: number;
 }
 
@@ -19,6 +21,7 @@ const Message = ({
   lastByUser,
   content,
   type,
+  seen,
   createdAt,
 }: Props) => {
   const formatTime = (timestamp: number) => format(timestamp, 'HH:mm');
@@ -49,6 +52,7 @@ const Message = ({
               {formatTime(createdAt)}
             </p>
           </div>
+          {seen}
         </div>
         <Avatar className={cn('relative w-8 h-8', {
           'order-2': fromCurrentUser,
