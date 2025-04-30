@@ -9,6 +9,8 @@ import DMConversationItem
   from '@/app/(root)/conversations/_components/DMConversationItem';
 import CreateGroupDialog
   from '@/app/(root)/conversations/_components/CreateGroupDialog';
+import GroupConversationItem
+  from '@/app/(root)/conversations/_components/GroupConversationItem';
 
 type Props = PropsWithChildren<object>
 
@@ -26,7 +28,14 @@ const ConversationsLayout = ({children}: Props) => {
                       )
                       : conversations.map(
                           (conversation) => conversation.conversation.isGroup
-                              ? null
+                              ? <GroupConversationItem
+                                  key={conversation.conversation._id}
+                                  id={conversation.conversation._id}
+                                  name={conversation?.conversation?.name ||
+                                      ''}
+                                  lastMessageSender={conversation?.lastMessage?.sender}
+                                  lastMessageContent={conversation?.lastMessage?.content}
+                              />
                               : <DMConversationItem
                                   key={conversation.conversation._id}
                                   id={conversation.conversation._id}

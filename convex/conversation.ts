@@ -57,7 +57,7 @@ export const get = query({
       };
     } else {
       const otherMembers = (await Promise.all(allConversationMemberships.filter(
-          membership => membership.memberId !== currentUser._id))).map(
+          membership => membership.memberId !== currentUser._id).map(
           async membership => {
             const member = await ctx.db.get(membership.memberId);
             if (!member) {
@@ -65,7 +65,7 @@ export const get = query({
             }
 
             return {username: member.username};
-          });
+          })));
 
       return {...conversation, otherMembers, otherMember: null};
     }
