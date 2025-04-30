@@ -23,13 +23,13 @@ type Props = {
   setOpen: Dispatch<SetStateAction<boolean>>,
 }
 
-const DeleteGroupDialog = ({conversationId, setOpen, open}: Props) => {
-  const {mutate: deleteGroup, pending} = useMutationState(
-      api.conversation.deleteGroup);
+const LeaveGroupDialog = ({conversationId, setOpen, open}: Props) => {
+  const {mutate: leaveGroup, pending} = useMutationState(
+      api.conversation.leaveGroup);
 
-  const handleDeleteGroup = async () => {
-    deleteGroup({conversationId}).
-        then(() => toast.success('Group deleted successfully.')).
+  const handleLeaveGroup = async () => {
+    leaveGroup({conversationId}).
+        then(() => toast.success('Left group successfully.')).
         catch((error) => toast.error(error instanceof ConvexError
             ? error.data
             : 'Unexpected error occurred.'));
@@ -43,15 +43,15 @@ const DeleteGroupDialog = ({conversationId, setOpen, open}: Props) => {
               Are you sure?
             </AlertDialogTitle>
             <AlertDialogDescription>
-              This action cannot be undone. All messages will be deleted and you
-              will not be able to message in this group.
+              This action cannot be undone. You will not be able to see previous
+              messages or send new messages in this group.
             </AlertDialogDescription>
           </AlertDialogHeader>
           <AlertDialogFooter>
             <AlertDialogCancel disabled={pending}>
               Cancel
             </AlertDialogCancel>
-            <AlertDialogAction disabled={pending} onClick={handleDeleteGroup}>
+            <AlertDialogAction disabled={pending} onClick={handleLeaveGroup}>
               Delete
             </AlertDialogAction>
           </AlertDialogFooter>
@@ -60,4 +60,4 @@ const DeleteGroupDialog = ({conversationId, setOpen, open}: Props) => {
   );
 };
 
-export default DeleteGroupDialog;
+export default LeaveGroupDialog;

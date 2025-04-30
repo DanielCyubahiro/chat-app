@@ -18,6 +18,8 @@ import RemoveFriendDialog
   from '@/app/(root)/conversations/[conversationId]/_components/dialog/RemoveFriendDialog';
 import DeleteGroupDialog
   from '@/app/(root)/conversations/[conversationId]/_components/dialog/DeleteGroupDialog';
+import LeaveGroupDialog
+  from '@/app/(root)/conversations/[conversationId]/_components/dialog/LeaveGroupDialog';
 
 const ConversationPage = () => {
   const [removeFriendDialogOpen, setRemoveFriendDialogOpen] = useState(false);
@@ -50,6 +52,11 @@ const ConversationPage = () => {
                         conversationId={convexConversationId}
                         open={removeFriendDialogOpen}
                         setOpen={setRemoveFriendDialogOpen}
+                    />
+                    <LeaveGroupDialog
+                        conversationId={convexConversationId}
+                        open={leaveGroupDialogOpen}
+                        setOpen={setLeaveGroupDialogOpen}
                     />
                     <DeleteGroupDialog
                         conversationId={convexConversationId}
