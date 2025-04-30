@@ -13,13 +13,31 @@ import {
   Dialog,
   DialogContent,
   DialogDescription,
+  DialogFooter,
   DialogHeader,
   DialogTitle,
   DialogTrigger,
 } from '@/components/ui/dialog';
 import {Tooltip, TooltipContent, TooltipTrigger} from '@/components/ui/tooltip';
 import {Button} from '@/components/ui/button';
-import {CirclePlus} from 'lucide-react';
+import {CirclePlus, X} from 'lucide-react';
+import {
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from '@/components/ui/form';
+import {Input} from '@/components/ui/input';
+import {
+  DropdownMenu,
+  DropdownMenuCheckboxItem,
+  DropdownMenuContent,
+  DropdownMenuTrigger,
+} from '@/components/ui/dropdown-menu';
+import {Avatar, AvatarFallback, AvatarImage} from '@/components/ui/avatar';
+import {Card} from '@/components/ui/card';
 
 type Props = {}
 
@@ -83,6 +101,107 @@ const CreateGroupDialog = ({}: Props) => {
               Add your friend to get started
             </DialogDescription>
           </DialogHeader>
+          <Form {...form}>
+            <form
+                onSubmit={form.handleSubmit(handleSubmit)}
+                className={'space-y-8'}
+            >
+              <FormField
+                  name={'name'}
+                  control={form.control}
+                  render={({field}) => (
+                      <FormItem>
+                        <FormLabel>Name</FormLabel>
+                        <FormControl>
+                          <Input
+                              placeholder={'Group name...'}
+                              {...field}
+                          />
+                        </FormControl>
+                        <FormMessage/>
+                      </FormItem>
+                  )}/>
+              <FormField
+                  name={'members'}
+                  control={form.control}
+                  render={({field}) => (
+                      <FormItem>
+                        <FormLabel>Friends</FormLabel>
+                        <FormControl>
+                          <DropdownMenu>
+                            <DropdownMenuTrigger
+                                asChild
+                                disabled={unselectedFriends.length === 0}
+                            >
+                              <Button className={'w-full'} variant={'outline'}>
+                                Select
+                              </Button>
+                            </DropdownMenuTrigger>
+                            <DropdownMenuContent className={'w-full'}>
+                              {unselectedFriends.map(friend => (
+                                  <DropdownMenuCheckboxItem
+                                      key={friend._id}
+                                      className={'flex items-center gap-2 w-full p-2'}
+                                      onCheckedChange={checked => {
+                                        if (checked) {
+                                          form.setValue('members',
+                                              [...members, friend._id]);
+                                        }
+                                      }}
+                                  >
+                                    <Avatar className={'w-8 h-8'}>
+                                      <AvatarImage src={friend.imageUrl}/>
+                                      <AvatarFallback>
+                                        {friend.username.substring(0, 1)}
+                                      </AvatarFallback>
+                                    </Avatar>
+                                    <h4 className={'truncate'}>
+                                      {friend.username}
+                                    </h4>
+                                  </DropdownMenuCheckboxItem>
+                              ))}
+                            </DropdownMenuContent>
+                          </DropdownMenu>
+                        </FormControl>
+                        <FormMessage/>
+                      </FormItem>
+                  )}/>
+              {members && members.length
+                  ? (
+                      <Card
+                          className={'w-full flex items-center gap-3 overflow-x-auto h-24 p-2 no-scrollbar'}>
+                        {friends?.filter(
+                            friend => members.includes(friend._id)).
+                            map(friend => (
+                                <div
+                                    key={friend._id}
+                                    className={'flex items-center gap-1 flex-col'}
+                                >
+                                  <div className={'relative mt-5'}>
+                                    <Avatar className={'w-8 h-8'}>
+                                      <AvatarImage src={friend.imageUrl}/>
+                                      <AvatarFallback>
+                                        {friend.username.substring(0, 1)}
+                                      </AvatarFallback>
+                                    </Avatar>
+                                    <X className={'text-muted-foreground w-4 h-4 absolute bottom-8 left-7 bg-muted rounded-full cursor-pointer'}/>
+                                  </div>
+                                  <p className={'truncate text-sm'}>
+                                    {friend.username.split(' ')[0]}
+                                  </p>
+                                </div>
+                            ))}
+                      </Card>
+                  )
+                  : null
+              }
+              <DialogFooter>
+                <Button disabled={pending} type={'submit'}>
+                  Create
+                </Button>
+              </DialogFooter>
+            </form>
+          </Form>
         </DialogContent>
       </Dialog>
   );
