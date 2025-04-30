@@ -61,7 +61,7 @@ const CreateGroupDialog = () => {
   const members = form.watch('members', []);
   const unselectedFriends = useMemo(() => friends
       ? friends.filter(friend => !members.includes(friend._id))
-      : [], [members.length, friends?.length]);
+      : [], [friends, members]);
 
   const handleSubmit = async (values: z.infer<typeof createGroupFormValidation>) => {
     await createGroup({name: values.name, members: values.members}).
