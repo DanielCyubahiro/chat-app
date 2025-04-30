@@ -39,8 +39,6 @@ import {
 import {Avatar, AvatarFallback, AvatarImage} from '@/components/ui/avatar';
 import {Card} from '@/components/ui/card';
 
-type Props = {}
-
 const createGroupFormValidation = z.object({
   name: z.string().min(1, {message: 'A name is required'}),
   members: z.string().
@@ -48,7 +46,7 @@ const createGroupFormValidation = z.object({
       min(1, {message: 'You must select at-least one member'}),
 
 });
-const CreateGroupDialog = ({}: Props) => {
+const CreateGroupDialog = () => {
   const friends = useQuery(api.friends.get);
   const {mutate: createGroup, pending} = useMutationState(
       api.friends.createGroup);
