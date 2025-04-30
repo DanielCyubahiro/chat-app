@@ -9,7 +9,7 @@ import {toast} from 'sonner';
 import {ConvexError} from 'convex/values';
 
 type Props = {
-  id: Id<requests>
+  id: Id<'requests'>
   imageUrl: string
   username: string
   email: string
