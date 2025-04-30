@@ -6,7 +6,7 @@ import {api} from '@/convex/_generated/api';
 
 export const useNavigation = () => {
   const pathname = usePathname();
-  const requestCount = useQuery(api.requests.count);
+  const requestCount = useQuery(api.requests.count) ?? 0;
   const conversations = useQuery(api.conversations.get);
 
   const unseenMessagesCount = useMemo(() => conversations?.reduce((acc, curr) => acc + curr.unseenCount, 0), [conversations]);
