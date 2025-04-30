@@ -16,6 +16,8 @@ import ChatInput
 import {useParams} from 'next/navigation';
 import RemoveFriendDialog
   from '@/app/(root)/conversations/[conversationId]/_components/dialog/RemoveFriendDialog';
+import DeleteGroupDialog
+  from '@/app/(root)/conversations/[conversationId]/_components/dialog/DeleteGroupDialog';
 
 const ConversationPage = () => {
   const [removeFriendDialogOpen, setRemoveFriendDialogOpen] = useState(false);
@@ -47,14 +49,20 @@ const ConversationPage = () => {
                     <RemoveFriendDialog
                         conversationId={convexConversationId}
                         open={removeFriendDialogOpen}
-                        setOpen={setRemoveFriendDialogOpen}/>
+                        setOpen={setRemoveFriendDialogOpen}
+                    />
+                    <DeleteGroupDialog
+                        conversationId={convexConversationId}
+                        open={deleteGroupDialogOpen}
+                        setOpen={setDeleteGroupDialogOpen}
+                    />
                     <Header
                         name={(conversation.isGroup
                             ? conversation.name
-                            : conversation.otherMember.username) || ''}
+                            : conversation.otherMember?.username) || ''}
                         imageUrl={conversation.isGroup
                             ? undefined
-                            : conversation.otherMember.imageUrl}
+                            : conversation.otherMember?.imageUrl}
                         options={conversation.isGroup
                             ? [
                               {

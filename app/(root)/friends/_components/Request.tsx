@@ -8,7 +8,7 @@ import {api} from '@/convex/_generated/api';
 import {toast} from 'sonner';
 import {ConvexError} from 'convex/values';
 
-type Props = { 
+type Props = {
   id: Id<requests>
   imageUrl: string
   username: string
